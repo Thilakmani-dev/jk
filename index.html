@@ -6,66 +6,59 @@
 <title>Jegadeeshwaran & Keerthana · Wedding Invitation</title>
 <meta name="description" content="You are invited to the wedding of R P S Jegadeeshwaran & S Keerthana. Reception 28 November 2026, wedding 29 November 2026.">
 <meta name="theme-color" content="#5e1a33">
+<!-- Personal invitation: keep it out of search engines. Remove to allow indexing. -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Favicons: upload favicon.ico, favicon.svg and apple-touch-icon.png to the SAME folder as this file -->
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!--
+  Link preview (WhatsApp, Instagram, Facebook...).
+  IMPORTANT: replace YOUR-SITE with your real Netlify address. og:image must be a full URL.
+  Keep the image about 1200x630 and under ~300 KB.
+-->
+<meta property="og:type" content="website">
 <meta property="og:title" content="Jegadeeshwaran weds Keerthana">
-<meta property="og:description" content="Reception · 28 Nov 2026 | Wedding · 29 Nov 2026">
-<meta property="og:image" content="assets/couple.png">
+<meta property="og:description" content="Reception · Sat, 28 Nov 2026 | Wedding · Sun, 29 Nov 2026 | Madurai">
+<meta property="og:image" content="https://jega-keerthana-weddinginvitation.netlify.app/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- Personal invitation: keep it out of search engines. Remove to allow indexing. -->
-    <meta name="robots" content="noindex, nofollow" />
 
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<!--
+  Turns on the envelope only for browsers that can run the site's script.
+  Old browsers, disabled JS or a script error all get the plain, fully visible invitation.
+  Once opened, the envelope stays open for the rest of the browser session.
+-->
+<script>
+  (function () {
+    var root = document.documentElement;
+    var modern = 'noModule' in HTMLScriptElement.prototype;
+    try { new Function('a', 'return a?.b ?? 0'); } catch (e) { modern = false; }
+    if (!modern) return;
 
-    <!--
-      Link preview (WhatsApp, Instagram, Facebook…).
-      Once the site is online, change og:image to the full address,
-      e.g. https://your-site.netlify.app/og-image.jpg, so the photo shows in the preview.
-    -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Jegadeeshwaran weds Keerthana" />
-    <meta
-      property="og:description"
-      content="Reception · Sat, 31 Oct 2026 | Wedding · Sun, 1 Nov 2026 | Madurai"
-    />
-    <meta property="og:image" content="og-image.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta name="twitter:card" content="summary_large_image" />
+    var opened = false;
+    try { opened = sessionStorage.getItem('invite-opened') === '1'; } catch (e) {}
+    root.classList.add('js');
+    if (!opened) {
+      root.classList.add('gated');
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    }
 
-    <!--
-      Turns on the envelope only for browsers that can run the site's script.
-      Old browsers, disabled JS or a failed download all get the plain, fully visible invitation.
-      Once opened, the envelope stays open for the rest of the browser session.
-    -->
-    <script>
-      (function () {
-        var root = document.documentElement;
-        var modern = 'noModule' in HTMLScriptElement.prototype;
-        try {
-          new Function('a', 'return a?.b ?? 0');
-        } catch (e) {
-          modern = false;
-        }
-        if (!modern) return;
-
-        var opened = false;
-        try {
-          opened = sessionStorage.getItem('invite-opened') === '1';
-        } catch (e) {}
-        root.classList.add('js', opened ? 'opened' : 'gated');
-        if (!opened && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
-
-        window.addEventListener(
-          'error',
-          function (e) {
-            if (e.target && e.target.tagName === 'SCRIPT') root.classList.remove('js', 'gated');
-          },
-          true,
-        );
-      })();
-    </script>
+    // If any script fails to load, or the main script crashes before finishing, show the plain invitation.
+    window.addEventListener('error', function (e) {
+      var failedScript = e.target && e.target.tagName === 'SCRIPT';
+      var crashed = e.target === window && !window.__inviteReady;
+      if (failedScript || crashed) root.classList.remove('js', 'gated');
+    }, true);
+  })();
+</script>
 
 <style>
   /* ---- THEME: change these colours to re-theme the whole site ---- */
@@ -83,7 +76,8 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
-  body.locked{overflow:hidden;height:100vh}
+  /* scroll lock only while the envelope is showing */
+  html.gated body{overflow:hidden;height:100vh;height:100svh}
   h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600}
   .script{font-family:'Great Vibes',cursive;font-weight:400}
   section{padding:80px 20px;text-align:center}
@@ -94,14 +88,14 @@
   .divider::before,.divider::after{content:"";width:70px;height:1px;background:var(--gold)}
 
   /* ---------- ENVELOPE INTRO ---------- */
+  /* Hidden by default (so no-JS visitors see the invitation). Shown only when the head script adds html.gated. */
   #intro{position:fixed;inset:0;z-index:100;background:var(--wine-dark);overflow:hidden;isolation:isolate;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--cream);transition:opacity .9s ease,visibility .9s}
-  /* blurred couple photo */
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--cream);
+    opacity:0;visibility:hidden;pointer-events:none;transition:opacity .9s ease,visibility .9s}
+  html.gated #intro{opacity:1;visibility:visible;pointer-events:auto}
   #intro::before{content:"";position:absolute;inset:-40px;z-index:-2;background:url('assets/couple.png') 50% 40%/cover no-repeat;filter:blur(16px)}
-  /* same wine colour mix on top, semi-transparent */
   #intro::after{content:"";position:absolute;inset:0;z-index:-1;
     background:radial-gradient(circle at 50% 30%,rgba(122,39,68,.72) 0%,rgba(63,15,33,.88) 80%)}
-  #intro.hide{opacity:0;visibility:hidden}
   #intro .dear{letter-spacing:.3em;text-transform:uppercase;font-size:.75rem;color:var(--gold-light)}
   #intro h2{font-size:2.2rem;margin:6px 0 30px;color:#fff}
   .envelope{position:relative;width:min(86vw,360px);height:240px;cursor:pointer;filter:drop-shadow(0 20px 30px rgba(0,0,0,.45))}
@@ -126,8 +120,8 @@
   .tap{margin-top:34px;font-size:.78rem;letter-spacing:.15em;color:var(--gold-light);animation:pulse 1.8s infinite}
   @keyframes pulse{50%{opacity:.4}}
 
-  /* ---------- HERO (main couple photo) ---------- */
-  .hero{position:relative;min-height:100vh;padding:0;display:flex;align-items:flex-end;justify-content:center;color:#fff;
+  /* ---------- HERO ---------- */
+  .hero{position:relative;min-height:100vh;min-height:100svh;padding:0;display:flex;align-items:flex-end;justify-content:center;color:#fff;
     background:var(--wine-dark) url('assets/couple.png') 50% 40%/cover no-repeat}
   .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(63,15,33,.55),rgba(63,15,33,.05) 38%,rgba(63,15,33,.9))}
   .hero-inner{position:relative;padding:0 20px 70px;max-width:700px}
@@ -148,7 +142,6 @@
   .person p{color:#7a6068;font-size:.9rem;margin-top:4px;letter-spacing:.08em}
   .amp{font-family:'Great Vibes',cursive;font-size:3rem;color:var(--rose);margin:10px 0}
 
-  /* arch photo (second picture) */
   .arch{width:min(78vw,300px);aspect-ratio:3/4;margin:0 auto 36px;border-radius:300px 300px 14px 14px;overflow:hidden;
     border:6px solid #fff;outline:1px solid var(--gold);outline-offset:6px;box-shadow:0 18px 40px rgba(63,15,33,.25)}
   .arch img{width:100%;height:100%;object-fit:cover;display:block}
@@ -177,7 +170,7 @@
   .box span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase}
   .thanks{margin-top:34px;font-size:1.6rem;color:var(--gold-light)}
 
-  /* ---------- SCHEDULE / CALENDAR ---------- */
+  /* ---------- SCHEDULE ---------- */
   .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
   .btn{display:inline-block;padding:10px 20px;border-radius:30px;border:1px solid var(--wine);color:var(--wine);text-decoration:none;font-size:.8rem;letter-spacing:.06em;
     background:transparent;cursor:pointer;font-family:inherit;transition:.25s}
@@ -198,20 +191,19 @@
   footer .btn{margin-top:26px;border-color:var(--gold);color:var(--gold-light)}
   footer .btn:hover{background:var(--gold);color:var(--wine-dark)}
 
-  /* optional music button */
   #music{position:fixed;right:16px;bottom:16px;z-index:60;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);
     background:var(--wine);color:var(--gold-light);font-size:1.2rem;cursor:pointer;display:none;box-shadow:0 6px 16px rgba(0,0,0,.3)}
 
-  /* reveal on scroll */
-  .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
-  .reveal.in{opacity:1;transform:none}
+  /* reveal on scroll: only hidden when JS is running, so no-JS visitors see everything */
+  html.js .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+  html.js .reveal.in{opacity:1;transform:none}
 
   /* falling petals */
   .petal{position:fixed;top:-20px;width:12px;height:12px;border-radius:12px 0 12px 0;background:var(--rose);opacity:.55;pointer-events:none;z-index:50;animation:fall linear forwards}
   @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
 </style>
 </head>
-<body class="locked">
+<body>
 
 <!-- ================= ENVELOPE INTRO ================= -->
 <div id="intro">
@@ -314,8 +306,8 @@
     <div class="venue-name" id="venueName2"></div>
     <div class="venue-addr" id="venueAddr2"></div>
     <div class="btns"><a class="btn solid" id="mapBtn" target="_blank" rel="noopener">Get Directions</a></div>
-    <div class="qr"><img id="qrImg" alt="QR code for venue location on Google Maps"></div>
-    <p class="small">Scan with your phone for directions</p>
+    <div class="qr" id="qrBox"><img id="qrImg" alt="QR code for venue location on Google Maps"></div>
+    <p class="small" id="qrNote">Scan with your phone for directions</p>
   </div>
 </section>
 
@@ -334,23 +326,24 @@
    EDIT THIS BLOCK — everything on the page comes from here
    ===================================================== */
 const INVITE = {
-  groom: "R P S Jegadeeshwaran",   // full name shown in the invitation
+  groom: "R P S Jegadeeshwaran",
   bride: "S Keerthana",
-  groomShort: "Jegadeeshwaran",    // shown on the cover and envelope
+  groomShort: "Jegadeeshwaran",
   brideShort: "Keerthana",
   groomInfo: "DME",
   brideInfo: "B.Com",
 
   // ISO format with +05:30 (India time): YYYY-MM-DDTHH:MM:00+05:30
-  // Dates are final. TIMES BELOW ARE PLACEHOLDERS — change to the real timings.
+  // TODO: dates are final, but these TIMES ARE PLACEHOLDERS. Change to the real muhurtham / reception timings.
   reception: { title:"Reception",         start:"2026-11-28T18:30:00+05:30", end:"2026-11-28T20:30:00+05:30" },
   wedding:   { title:"Wedding Ceremony",  start:"2026-11-29T09:00:00+05:30", end:"2026-11-29T10:30:00+05:30" },
 
   venueName: "C.M.C Marriage Hall",
+  // TODO: add the full street address, area and pincode
   venueAddress: "Madurai, Tamil Nadu",
-  mapLink: "https://www.google.com/maps/place/C.M.C+Marriage+hall/@9.9130093,78.1436391,17z/data=!3m1!4b1!4m6!3m5!1s0x3b00c507ec465bd5:0xc20d8ff66114269f!8m2!3d9.9130093!4d78.146214!16s%2Fg%2F11bzs2d_f6?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+  mapLink: "https://www.google.com/maps/place/C.M.C+Marriage+hall/@9.9130093,78.1436391,17z/data=!3m1!4b1!4m6!3m5!1s0x3b00c507ec465bd5:0xc20d8ff66114269f!8m2!3d9.9130093!4d78.146214!16s%2Fg%2F11bzs2d_f6",
 
-  musicUrl: ""   // optional: put an mp3 file path here (e.g. "assets/song.mp3") to show a music button
+  musicUrl: ""   // optional: e.g. "assets/song.mp3" to show a music button
 };
 
 /* ---------- helpers ---------- */
@@ -381,6 +374,9 @@ $('brideName').textContent = I.bride;  $('brideInfo').textContent = I.brideInfo;
 $('footNames').textContent = names;
 $('footDates').textContent = datesLine;
 $('mapBtn').href = I.mapLink;
+
+/* QR code (hidden automatically if the QR service is unreachable) */
+$('qrImg').addEventListener('error', () => { $('qrBox').style.display = 'none'; $('qrNote').style.display = 'none'; });
 $('qrImg').src = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&data=' + encodeURIComponent(I.mapLink);
 
 /* ---------- month calendar (highlights reception + wedding days) ---------- */
@@ -408,13 +404,19 @@ function gcal(e){
     location:`${I.venueName}, ${I.venueAddress}`, ctz:'Asia/Kolkata'});
   return 'https://calendar.google.com/calendar/render?' + p.toString();
 }
+// .ics helpers: escape special characters and fold long lines as the format requires
+const icsEsc = s => String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
+const icsFold = line => { const out = []; while(line.length > 73){ out.push(line.slice(0,73)); line = ' ' + line.slice(73); } out.push(line); return out.join('\r\n'); };
 function icsHref(e){
-  const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wedding Invitation//EN','BEGIN:VEVENT',
+  const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wedding Invitation//EN','BEGIN:VEVENT',
     `UID:${stamp(e.start)}@wedding-invite`,`DTSTAMP:${stamp(new Date())}`,
     `DTSTART:${stamp(e.start)}`,`DTEND:${stamp(e.end)}`,
-    `SUMMARY:${e.title} · ${names}`,`LOCATION:${I.venueName}, ${I.venueAddress}`.replace(/,/g,'\\,'),
-    `DESCRIPTION:Directions: ${I.mapLink}`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
-  return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    `SUMMARY:${icsEsc(e.title + ' · ' + names)}`,
+    `LOCATION:${icsEsc(I.venueName + ', ' + I.venueAddress)}`,
+    `DESCRIPTION:${icsEsc('Directions: ' + I.mapLink)}`,
+    'END:VEVENT','END:VCALENDAR'].map(icsFold).join('\r\n');
+  // Blob URLs download more reliably than data: URLs, especially on iPhones
+  return URL.createObjectURL(new Blob([lines], {type:'text/calendar;charset=utf-8'}));
 }
 $('recGoogle').href = gcal(I.reception);  $('wedGoogle').href = gcal(I.wedding);
 $('recIcs').href = icsHref(I.reception);  $('recIcs').download = 'reception.ics';
@@ -432,11 +434,17 @@ const env = $('envelope');
 function openEnvelope(){
   if(env.classList.contains('open')) return;
   env.classList.add('open');
+  try{ sessionStorage.setItem('invite-opened','1'); }catch(e){}
   if(I.musicUrl){ bgm.play().then(()=>{ mbtn.textContent='❚❚'; }).catch(()=>{}); }
-  setTimeout(()=>{ $('intro').classList.add('hide'); document.body.classList.remove('locked'); petals(); }, 1900);
+  setTimeout(()=>{
+    // removing "gated" fades the intro out (see CSS) and unlocks scrolling
+    document.documentElement.classList.remove('gated');
+    window.scrollTo(0,0);
+    petals();
+  }, 1900);
 }
 env.addEventListener('click', openEnvelope);
-env.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') openEnvelope(); });
+env.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openEnvelope(); } });
 
 /* ---------- countdown ---------- */
 const target = new Date(I.wedding.start).getTime();
@@ -453,8 +461,12 @@ function tick(){
 tick(); setInterval(tick,1000);
 
 /* ---------- scroll reveal ---------- */
-const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.15});
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+} else {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+}
 
 /* ---------- petals ---------- */
 function petals(){
@@ -463,7 +475,6 @@ function petals(){
     p.style.left = Math.random()*100+'vw';
     p.style.animationDuration = (5+Math.random()*5)+'s';
     p.style.animationDelay = (Math.random()*3)+'s';
-    p.style.transform = `scale(${.6+Math.random()})`;
     document.body.appendChild(p);
     setTimeout(()=>p.remove(), 12000);
   }
@@ -477,6 +488,8 @@ $('shareBtn').addEventListener('click', async () => {
     else { await navigator.clipboard.writeText(location.href); $('shareBtn').textContent='Link copied ✓'; }
   }catch(e){}
 });
+
+window.__inviteReady = true;
 </script>
 </body>
 </html>
