@@ -12,6 +12,61 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Personal invitation: keep it out of search engines. Remove to allow indexing. -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!--
+      Link preview (WhatsApp, Instagram, Facebook…).
+      Once the site is online, change og:image to the full address,
+      e.g. https://your-site.netlify.app/og-image.jpg, so the photo shows in the preview.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jegadeeshwaran weds Keerthana" />
+    <meta
+      property="og:description"
+      content="Reception · Sat, 31 Oct 2026 | Wedding · Sun, 1 Nov 2026 | Madurai"
+    />
+    <meta property="og:image" content="og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!--
+      Turns on the envelope only for browsers that can run the site's script.
+      Old browsers, disabled JS or a failed download all get the plain, fully visible invitation.
+      Once opened, the envelope stays open for the rest of the browser session.
+    -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var modern = 'noModule' in HTMLScriptElement.prototype;
+        try {
+          new Function('a', 'return a?.b ?? 0');
+        } catch (e) {
+          modern = false;
+        }
+        if (!modern) return;
+
+        var opened = false;
+        try {
+          opened = sessionStorage.getItem('invite-opened') === '1';
+        } catch (e) {}
+        root.classList.add('js', opened ? 'opened' : 'gated');
+        if (!opened && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+        window.addEventListener(
+          'error',
+          function (e) {
+            if (e.target && e.target.tagName === 'SCRIPT') root.classList.remove('js', 'gated');
+          },
+          true,
+        );
+      })();
+    </script>
+
 <style>
   /* ---- THEME: change these colours to re-theme the whole site ---- */
   :root{
